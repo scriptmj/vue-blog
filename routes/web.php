@@ -16,3 +16,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/blogposts', 'App\Http\Controllers\PostController@getPosts');
+
+Route::get('/tags', 'App\Http\Controllers\TagController@getTags');
+Route::get('/chosentags', 'App\Http\Controllers\TagController@getChosenTags');
+
+Route::post('/sendnewpost', 'App\Http\Controllers\PostController@store');
+
+Route::get('/view/{id}', 'App\Http\Controllers\PostController@getPostById');

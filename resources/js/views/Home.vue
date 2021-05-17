@@ -15,7 +15,7 @@ import SmallPost from '../components/SmallPost';
 export default {
     components: { SmallPost },
     created() {
-        axios.get('/blogposts').then(response => this.posts = response.data);
+        axios.get('/blogposts').then(response => this.posts = response.data.data);
     },
     data() {
         return {

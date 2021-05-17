@@ -10,7 +10,7 @@
                 <hr>
                 <h2>Comments</h2>
 
-                <comment-section :id="post.id"></comment-section>
+                <comment-section :comments="post.comments"></comment-section>
             </div>
         </div>
     </div>    
@@ -43,8 +43,8 @@ export default {
             var self = this;
             console.log('fetching');
             axios.get('/view/' + id).then(function(response){
-                console.log('then');
-                self.post = response.data;
+                console.log(response.data.data);
+                self.post = response.data.data;
                 self.loading = false;
             }).catch(function(response){
                 console.log(response);

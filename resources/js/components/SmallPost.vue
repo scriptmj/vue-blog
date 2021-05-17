@@ -32,6 +32,9 @@ export default {
                     id: this.post.id
                 }
             }
+        },
+        formatDate(date){
+            return new DateTimeFormat(date);
         }
     }
 }

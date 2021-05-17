@@ -17,11 +17,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/blogposts', 'App\Http\Controllers\PostController@getPosts');
+Route::get('/blogposts', 'App\Http\Controllers\PostController@getAllPosts');
 
-Route::get('/tags', 'App\Http\Controllers\TagController@getTags');
-Route::get('/chosentags', 'App\Http\Controllers\TagController@getChosenTags');
+Route::get('/tags', 'App\Http\Controllers\TagController@getAllTags');
+Route::get('/tags/{post}', 'App\Http\Controllers\TagController@getTagsByPost');
 
-Route::post('/sendnewpost', 'App\Http\Controllers\PostController@store');
+Route::post('/store', 'App\Http\Controllers\PostController@store');
 
-Route::get('/view/{id}', 'App\Http\Controllers\PostController@getPostById');
+Route::get('/view/{id}', 'App\Http\Controllers\PostController@getPost');
+
+Route::get('/comments/{id}', 'App\Http\Controllers\CommentController@getCommentsByPost');

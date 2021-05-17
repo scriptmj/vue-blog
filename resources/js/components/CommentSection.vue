@@ -1,5 +1,9 @@
 <template>
     <div>
+        <div v-if="loading">Loading post</div>
+
+        <response-view v-if="error" :response="error" :class="'response error'"></response-view>
+
         <template v-for="comment in comments">
             <comment :comment="comment" :key="comment.id"></comment>
         </template>
@@ -9,22 +13,35 @@
 
 
 <script>
+import Comment from '../components/Comment.vue';
 export default {
+    components: { Comment },
     props: {
-        id: Number,
+        comments: Array,
+        //postid: Number,
     },
     created(){
-        this.fetchComments();
+        //this.fetchComments();
     },
     data(){
         return {
-            comments: [],
+            //comments: [],
+            loading: false,
+            error: null,
         }
     },
     methods: {
-        fetchComments(){
-            //Fetch comments from backend.
-        }
+        // fetchComments(){
+        //     axios.get('/comments/' + postid).then(function(response){
+        //         console.log(response.data.data);
+        //         self.comments = response.data.data;
+        //         self.loading = false;
+        //     }).catch(function(response){
+        //         console.log(response);
+        //         self.error = response;
+        //         self.loading = false;
+        //     });
+        // }
     },
 }
 </script>

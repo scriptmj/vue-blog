@@ -28,4 +28,7 @@ Route::get('/view/{id}', 'App\Http\Controllers\PostController@getPost');
 
 Route::get('/comments/{id}', 'App\Http\Controllers\CommentController@getCommentsByPost');
 
-Route::POST('/newcomment', 'App\Http\Controllers\CommentController@storeComment');
+Route::POST('/newcomment', 'App\Http\Controllers\CommentController@storeComment');Route::POST('/newcomment', 'App\Http\Controllers\CommentController@storeComment');
+
+require __DIR__.'/auth.php';
+require __DIR__.'/api.php';

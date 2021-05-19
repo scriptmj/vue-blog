@@ -1,12 +1,16 @@
 <template>
-    <div>{{response}}</div>    
+    <div>
+        <ul class="response-list">
+            <li v-for="value in response" :key="value[0]">{{value[0]}}</li>
+        </ul>
+    </div>    
 </template>
 
 
 <script>
 export default {
     props: {
-        response: String,
+        response: Object,
     }
 }
 </script>
@@ -41,5 +45,8 @@ export default {
     color: #0c5460;
     background-color: #d1ecf1;
     border: 2px solid #bee5eb;
+}
+.response-list{
+    list-style:none;
 }
 </style>

@@ -10,7 +10,7 @@
                 <hr>
                 <h2>Comments</h2>
 
-                <comment-section :comments="post.comments"></comment-section>
+                <comment-section :comments="post.comments" :postid="post.id"></comment-section>
             </div>
         </div>
     </div>    

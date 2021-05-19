@@ -1,0 +1,67 @@
+<template>
+    <div>
+        <response-view v-if="submitted" :response="responseText" :class="'response ' + responseClass"></response-view>
+        <div class="form-group">
+            <form @submit.prevent="submitForm">
+                <label for="comment">Post new comment</label>
+                <textarea 
+                    id="comment" 
+                    name="comment"
+                    type="text"
+                    class=""
+                    rows="3"
+                    v-model="comment.body"
+                    placeholder="Write your comment" />
+                <button type="submit" class="button">Submit</button>
+            </form>
+        </div>
+    </div>
+</template>
+
+
+<script>
+import ResponseView from './ResponseView.vue';
+export default {
+    props: {
+        id: Number,
+    },
+    components: {
+        ResponseView
+    },
+    data() {
+        return {
+            comment: {
+                'body': "",
+                'user_id': 1, //TODO REMOVE
+                'post_id': this.id,
+            },
+            responseText: {},
+            responseClass: "hidden",
+            submitted: false,
+        }
+    },
+    methods: {
+        submitForm(){
+            var self = this;
+            axios.post('/newcomment', this.comment).then(function(response){
+                if(response.status == 200){
+                    self.notifyUser('success', {body: ['Your comment has been published']});
+                    self.comment.body = "";
+                } 
+            }).catch(function(response){
+                self.notifyUser('error', response.response.data.errors);
+            });
+        },
+        notifyUser(className, responseText){
+            this.submitted = true;
+            this.responseClass = className;
+            this.responseText = responseText;
+        },
+    },
+}
+</script>
+
+
+<style>
+
+</style>

@@ -13,6 +13,12 @@
             <li class="nav-item">
                 <router-link to="/newpost" class="nav-a">New post</router-link>
             </li>
+            <li class="nav-item">
+                <router-link to="/login" class="nav-a">Login</router-link>
+            </li>
+            <li class="nav-item">
+                <router-link to="/register" class="nav-a">Register</router-link>
+            </li>
         </ul>
     </div>
 </template>

@@ -1,5 +1,6 @@
 <template>
     <div>
+        <h2 class="ml-5">Submit new post</h2>
         <post-form></post-form>
     </div>
 </template>

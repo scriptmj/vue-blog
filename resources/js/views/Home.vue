@@ -57,10 +57,6 @@ export default {
 </script>
 
 <style>
-.page{
-    margin-left: 25px;
-    width: 75%;
-}
 .pagination{
     display: flex;
     list-style: none;

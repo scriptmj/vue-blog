@@ -24,6 +24,16 @@ let routes = [
         path: '/view/:id',
         component: require('./views/ViewPost.vue').default,
     },
+    {
+        name: 'login',
+        path: '/login',
+        component: require('./views/Login.vue').default,
+    },
+    {
+        name: 'register',
+        path: '/register',
+        component: require('./views/Register.vue').default,
+    },
 
 ];
 

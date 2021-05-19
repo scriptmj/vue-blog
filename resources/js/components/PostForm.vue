@@ -51,7 +51,7 @@
             </multiselect>
         </div>
         <div>
-            <button type="submit" class="button">Submit</button>
+            <button type="submit" class="button ml-5">Submit</button>
         </div>
     </form>
 </div>

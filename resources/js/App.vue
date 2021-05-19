@@ -37,4 +37,7 @@ export default {
         color: teal;
         text-decoration: none;
     }
+    .ml-5{
+        margin-left:1.2rem;
+    }
 </style>

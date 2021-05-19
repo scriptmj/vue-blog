@@ -14,11 +14,12 @@
         <div class="form-group">
         </div>
             <label for="description">Description</label>
-            <input 
+            <textarea 
                 id="description" 
                 name="description"
                 type="text"
                 class=""
+                rows="3"
                 v-model="post.description"
                 placeholder="What's this post about?" />
         <div class="form-group">
@@ -29,7 +30,7 @@
                 name="body"
                 type="text"
                 class=""
-                rows="5"
+                rows="8"
                 v-model="post.body"
                 placeholder="Write your post" />
         </div>
@@ -49,7 +50,9 @@
                 placeholder="Select categories">
             </multiselect>
         </div>
-        <button type="submit">Submit</button>
+        <div>
+            <button type="submit" class="button">Submit</button>
+        </div>
     </form>
 </div>
 </template>
@@ -72,8 +75,9 @@ export default  {
                 description: '',
                 body: '',
                 tags: [],
+                user_id: 1,
             },
-            responseText: '',
+            responseText: {},
             responseClass: 'hidden',
         }
     },
@@ -88,12 +92,13 @@ export default  {
         },
         submitForm(){
             var self = this;
-            axios.post('/sendnewpost', this.post).then(function(response){
+            axios.post('/post/store', this.post).then(function(response){
                 if(response.status == 200){
-                    self.notifyUser('success', 'Your post has been published');
+                    self.notifyUser('success', {body:['Your post has been published']});
                 }
             }).catch(function(response){
-                self.notifyUser('error', "Something went wrong");
+                self.notifyUser('error', response.response.data.errors)
+                //self.notifyUser('error', "Something went wrong");
             });
         },
         notifyUser(className, responseText){
@@ -116,54 +121,40 @@ export default  {
     }
     input {
         border-radius: .25rem;
-        border: 1px #f3f7f9f1;
+        border: 1px solid #e8e8e8;
         background-color: #f3f7f9f1;
         width:90%;
         padding: 0.8rem;
         font-size: 1rem;
+        font-family:inherit;
     }
     textarea {
         border-radius: .25rem;
-        border: 1px #f3f7f9f1;
+        border: 1px solid #e8e8e8;
         background-color: #f3f7f9f1;
         width:90%;
         padding: 0.8rem;
         font-size: 1rem;
+        font-family:inherit;
     }
     .form-group {
         padding: 1rem;
     }
-    /* .multiselect {
-        box-sizing: content-box;
-        display:block;
-        position:relative;
+    .multiselect {
+        width:92%;
+    }
+    .multiselect__tags {
+        background-color: #f3f7f9f1;
     }
     .multiselect__tag{
-        position: relative;
-        display: inline-block;
-        background:teal;
-        color:white;
+        background: teal;
+    }
+    .button {
+        background: teal;
+        color: white;
+        padding: .8rem;
+        border: 1px solid teal;
         border-radius: 5px;
-        padding: 4px 26px 4px 10px;
-        margin-right: 10px;
-        line-height:1;
-        margin-bottom: 5px;
-        font-size:14px;
+        margin: 2px;
     }
-    .multiselect__content{
-        display:block;
-        list-style:none;
-        text-align:left;
-        padding: 0;
-        margin:3px 0;
-        border:1px solid lightgray;
-    }
-    .multiselect__option{
-        padding:0 5px;
-    }
-    .multiselect__option--selected{
-        background:#e6e6e6;
-        display:block;
-        padding:0 5px;
-    } */
 </style>

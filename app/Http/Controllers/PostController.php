@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Http\Resources\PostResource;
+use App\Http\Requests\StorePostRequest;
 
 class PostController extends Controller
 {
@@ -31,10 +32,9 @@ class PostController extends Controller
         return $tag->posts;
     }
 
-    public function store(){
-        if(request('title') == null){
-            return response("No title given", 400);
-        }
+    public function store(StorePostRequest $request){
+        $validatedPost = new Post($request->validated());
+        $validatedPost->save();
     }
 
 }

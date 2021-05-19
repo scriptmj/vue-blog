@@ -97,8 +97,7 @@ export default  {
                     self.notifyUser('success', {body:['Your post has been published']});
                 }
             }).catch(function(response){
-                self.notifyUser('error', response.response.data.errors)
-                //self.notifyUser('error', "Something went wrong");
+                self.notifyUser('error', response.response.data.errors);
             });
         },
         notifyUser(className, responseText){

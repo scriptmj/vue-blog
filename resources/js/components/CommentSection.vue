@@ -12,9 +12,6 @@
             <comment :comment="comment" :key="comment.id"></comment>
         </template>
 
-        
-
-        
     </div>
 
 </template>
@@ -30,27 +27,14 @@ export default {
         postid: Number,
     },
     created(){
-        //this.fetchComments();
     },
     data(){
         return {
-            //comments: [],
             loading: false,
             error: null,
         }
     },
     methods: {
-        // fetchComments(){
-        //     axios.get('/comments/' + postid).then(function(response){
-        //         console.log(response.data.data);
-        //         self.comments = response.data.data;
-        //         self.loading = false;
-        //     }).catch(function(response){
-        //         console.log(response);
-        //         self.error = response;
-        //         self.loading = false;
-        //     });
-        // }
     },
 }
 </script>

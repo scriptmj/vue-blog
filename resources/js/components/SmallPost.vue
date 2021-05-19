@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="post-card">
+        <!-- <div class="post-card">
             <div class="post-title">{{ post.title }}</div>
             <div class="post-body">
                 <p class="silent">Written by {{post.author}} on {{post.created_at}}</p>
@@ -10,6 +10,21 @@
                 <router-link :to="postLink">
                     Read more
                 </router-link>
+            </div>
+        </div> -->
+        <div class="post-card">
+            <p class="silent">{{post.created_at}}</p>
+            <p>
+                <router-link :to="postLink" class="post-title">
+                    {{ post.title }}
+                </router-link>
+            </p>
+            <p class="post-body">{{ post.description }}</p>
+            <div class="post-footer">
+                <router-link :to="postLink">
+                    Read more
+                </router-link>
+                By {{post.author}}
             </div>
         </div>
     </div>    
@@ -43,28 +58,31 @@ export default {
 
 <style>
 .post-card{
-    background-color:#f3f7f9f1;
+    background-color:white;
     border-radius: .5rem;
+    padding:1rem;
     margin: 0 0 1rem 1rem;
-    border: 2px solid #d7dadbf1;
-    width: 50%;
+    /* border: 2px solid #d7dadbf1; */
+    width: 80%;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.06);
 }
 .post-title{
-    background-color:#d7dadbf1;
     display:block;
-    padding: 1rem;
-    border-radius: .375rem .375rem 0 0;
-    font-weight: 500;
-    font-size: 1.2rem;
+    font-weight: 700;
+    font-size: 1.5rem;
+    text-decoration: none;
+    color:black;
+}
+a:hover{
+    text-decoration-line: underline;
+    color:teal;
 }
 .post-body{
-    padding: 1rem;
     color:black;
 }
 .post-footer{
-    padding: 1rem;
-    background-color:#d7dadbf1;
-    border-radius: 0 0 .375rem .375rem;
+    display: flex;
+    justify-content: space-between;
 }
 p.silent {
     font-weight:400;

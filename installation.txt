@@ -7,3 +7,9 @@ npm install
 npm run dev
 
 npm install vue-multiselect --save
+
+//npm install vue bootstrap bootstrap-vue
+
+npm install laravel-vue-pagination
+
+npm install vue-resource

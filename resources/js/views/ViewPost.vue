@@ -41,13 +41,10 @@ export default {
             this.error = this.post = null;
             var id = this.$route.params.id;
             var self = this;
-            console.log('fetching');
             axios.get('/view/' + id).then(function(response){
-                console.log(response.data.data);
                 self.post = response.data.data;
                 self.loading = false;
             }).catch(function(response){
-                console.log(response);
                 self.error = response;
                 self.loading = false;
             });

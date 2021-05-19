@@ -10,14 +10,7 @@ use App\Http\Requests\StorePostRequest;
 class PostController extends Controller
 {
     public function getAllPosts(){
-        //return Post::all();
-
-        // $posts = Post::all();
-        // foreach($posts as $post){
-        //     $post->author = $post->user->name;
-        // }
-        // return $posts;
-        return PostResource::collection(Post::all());
+        return PostResource::collection(Post::orderBy('created_at', 'DESC')->paginate(10));
     }
 
     public function getPost($id){

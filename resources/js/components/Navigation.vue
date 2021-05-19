@@ -2,16 +2,16 @@
     <div>
         <ul class="navbar">
             <li class="nav-item">
-                <router-link to="/" exact>Home</router-link>
+                <router-link to="/" exact class="nav-a">Home</router-link>
             </li>
             <li class="nav-item">
-                <router-link to="/about">About</router-link>
+                <router-link to="/about" class="nav-a">About</router-link>
             </li>
             <li class="nav-item">
-                <router-link to="/contact">Contact</router-link>
+                <router-link to="/contact" class="nav-a">Contact</router-link>
             </li>
             <li class="nav-item">
-                <router-link to="/newpost">New post</router-link>
+                <router-link to="/newpost" class="nav-a">New post</router-link>
             </li>
         </ul>
     </div>
@@ -32,14 +32,29 @@ export default {
 
 <style>
     .nav-item {
-        padding: 3px 10px;
+        margin: 0;
         align-items: center;
         display: flex;
+        font-size:1.7rem;
+        font-weight:600;
+    }
+    .nav-a{
+        padding:10px;
     }
     .navbar {
         display:flex;
+        border-bottom: 4px solid teal;
+        background-color: white;
+
+        margin-bottom:20px;
     }
     .router-link-active{
-        color:red;
+        color:white;
+        background-color: teal;
+    }
+    .router-link-active:hover{
+        color:white;
+        background-color: teal;
+        text-decoration-line: none;
     }
 </style>

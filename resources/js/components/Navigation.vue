@@ -27,20 +27,19 @@
     </div>
 </template>
 
+
 <script>
 import Logout from './Logout.vue';
 export default {
     components: {Logout},
-    setup() {
-        
-    },
     data() {
         return {
-           
+           user: this.$store.state.user,
         }
-    }
+    },
 }
 </script>
+
 
 <style>
     .nav-item {

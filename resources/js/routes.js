@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import store from './store';
 
 
 let routes = [
@@ -18,6 +19,7 @@ let routes = [
     {
         path: '/newpost',
         component: require('./views/NewPost.vue').default,
+        meta: { requiresAuth: true },
     },
     {
         name: 'post',
@@ -37,6 +39,23 @@ let routes = [
 
 ];
 
-export default new VueRouter({
-    routes
+const router = new VueRouter({
+    routes,
+    
 });
+
+router.beforeEach((to, from, next) => {
+    if(to.meta.requiresAuth){
+        if(!store.state.user){
+            next({
+                name: "login"
+            });
+        } else {
+            next();
+        }
+    } else {
+        next();
+    }
+});
+
+export default router;

@@ -29,6 +29,7 @@
 
 <script>
 import ResponseView from '../components/ResponseView.vue';
+import store from "../store";
 export default {
     components: { ResponseView },
     data() {
@@ -44,12 +45,13 @@ export default {
     methods: {
         submitLogin(){
             var self = this;
-            axios.post('/login', this.login).then(function(response){
-                if(response.status == 200){
-                    self.notifyUser('success', {body:['Your post has been published']});
-                }
-            }).catch(function(response){
-                self.notifyUser('error', response.response.data.errors);
+            const { email, password } = this.login;
+            this.$store.dispatch('login', { email, password }).then((response)=> {
+                //console.log(response);
+                this.$router.push('/');
+            }).catch((error)=>{
+                console.log(error);
+                self.notifyUser('error', error);
             });
         },
         notifyUser(className, responseText){

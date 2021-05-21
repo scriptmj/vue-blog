@@ -1,15 +1,27 @@
 <template>
     <li class="nav-item">
-        <form>
-            <button type="submit" class="logout-button">Logout</button>
-        </form>
+        <button @click="logout" type="submit" class="logout-button">Logout</button>
     </li>
 </template>
 
 
 <script>
+//import store from '../store';
 export default {
-
+    methods: {
+        logout() {
+            var self = this;
+            axios.post('/logout').then(function(response){
+                if(response.status == 200){
+                    self.$store.commit('logoutUser');
+                    //self.notifyUser('success', {body:['You have successfully logged in.']});
+                    //redirect
+                }
+            }).catch(function(response){
+                //self.notifyUser('error', response.response.data.errors);
+            });
+        },
+    },
 }
 </script>
 

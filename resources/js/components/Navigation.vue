@@ -13,18 +13,24 @@
             <li class="nav-item">
                 <router-link to="/newpost" class="nav-a">New post</router-link>
             </li>
-            <li class="nav-item">
-                <router-link to="/login" class="nav-a">Login</router-link>
-            </li>
-            <li class="nav-item">
-                <router-link to="/register" class="nav-a">Register</router-link>
-            </li>
+            <div class="float-right">
+                <li class="nav-item">
+                    <router-link to="/login" class="nav-a">Login</router-link>
+                </li>
+                <li class="nav-item">
+                    <router-link to="/register" class="nav-a">Register</router-link>
+                </li>
+                <logout></logout>  
+            </div>
+            
         </ul>
     </div>
 </template>
 
 <script>
+import Logout from './Logout.vue';
 export default {
+    components: {Logout},
     setup() {
         
     },
@@ -51,7 +57,6 @@ export default {
         display:flex;
         border-bottom: 4px solid teal;
         background-color: white;
-
         margin-bottom:20px;
     }
     .router-link-active{
@@ -62,5 +67,9 @@ export default {
         color:white;
         background-color: teal;
         text-decoration-line: none;
+    }
+    .float-right{
+        margin-left: auto;
+        display:flex;
     }
 </style>

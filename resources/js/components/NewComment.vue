@@ -12,6 +12,7 @@
                     rows="3"
                     v-model="comment.body"
                     placeholder="Write your comment" />
+                    <br />
                 <button type="submit" class="button">Submit</button>
             </form>
         </div>

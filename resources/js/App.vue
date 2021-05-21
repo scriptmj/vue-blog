@@ -38,6 +38,6 @@ export default {
         text-decoration: none;
     }
     .ml-5{
-        margin-left:1.2rem;
+        margin-left:2rem;
     }
 </style>

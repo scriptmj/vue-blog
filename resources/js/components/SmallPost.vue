@@ -1,18 +1,6 @@
 <template>
     <div>
-        <!-- <div class="post-card">
-            <div class="post-title">{{ post.title }}</div>
-            <div class="post-body">
-                <p class="silent">Written by {{post.author}} on {{post.created_at}}</p>
-                {{ post.description }}
-            </div>
-            <div class="post-footer">
-                <router-link :to="postLink">
-                    Read more
-                </router-link>
-            </div>
-        </div> -->
-        <div class="post-card">
+        <div class="post-card ml-5">
             <p class="silent">{{post.created_at}}</p>
             <p>
                 <router-link :to="postLink" class="post-title">

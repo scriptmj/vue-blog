@@ -30,6 +30,8 @@ export default {
 }
 .hidden{
     display: hidden;
+    padding: 0;
+    margin: 5;
 }
 .response.error{
     color: #721c24;

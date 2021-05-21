@@ -8,7 +8,7 @@
             <div v-if="post">
                 <post :post="post"></post>  
                 <hr>
-                <h2>Comments</h2>
+                <h2 class="ml-5">Comments</h2>
 
                 <comment-section :comments="post.comments" :postid="post.id"></comment-section>
             </div>

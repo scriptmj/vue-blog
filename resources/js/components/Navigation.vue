@@ -4,14 +4,11 @@
             <li class="nav-item">
                 <router-link to="/" exact class="nav-a">Home</router-link>
             </li>
-            <li class="nav-item">
-                <router-link to="/about" class="nav-a">About</router-link>
-            </li>
-            <li class="nav-item">
-                <router-link to="/contact" class="nav-a">Contact</router-link>
-            </li>
-            <li class="nav-item">
+            <li class="nav-item" v-if=auth>
                 <router-link to="/newpost" class="nav-a">New post</router-link>
+            </li>
+            <li class="nav-item" v-if=auth>
+                <router-link to="/yourposts" class="nav-a">Your posts</router-link>
             </li>
             <div class="float-right">
                 <li class="nav-item" v-if=!auth>
@@ -20,6 +17,7 @@
                 <li class="nav-item" v-if=!auth>
                     <router-link to="/register" class="nav-a">Register</router-link>
                 </li>
+                <span v-if="auth" class="welcome-message">{{ username }}</span>
                 <logout v-if=auth></logout>  
             </div>
             
@@ -36,8 +34,6 @@ export default {
     components: {Logout},
     data() {
         return {
-           //username: this.$store.state.user.name,
-           //auth: this.$store.getters.isAuthenticated,
         }
     },
     computed: {
@@ -77,5 +73,13 @@ export default {
     .float-right{
         margin-left: auto;
         display:flex;
+    }
+    .welcome-message{
+        color: teal;
+        align-items: center;
+        font-size: 1rem;
+        font-weight: 300;
+        margin-top:auto;
+        margin-bottom: auto;
     }
 </style>

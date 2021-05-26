@@ -1,7 +1,7 @@
 <template>
 <div>
     <response-view :response="responseText" :class="'response ' + responseClass"></response-view>
-    <form @submit.prevent="submitForm">
+    <form v-if="post" @submit.prevent="submitForm">
         <div class="form-group">
             <label for="title">Title</label>
             <input 
@@ -64,25 +64,20 @@ import ResponseView from './ResponseView.vue';
 
 export default  {
   components: { Tag, Multiselect, ResponseView },
-    setup() {
-        
-    },
     data() {
         return {
             tags: [],
-            post: {
-                title: '',
-                description: '',
-                body: '',
-                tags: [],
-            },
+            post: null,
             responseText: {},
             responseClass: 'hidden',
+            edit: false,
         }
     },
     mounted() {
-        axios.get('/tags').then(response => this.tags = response.data);
+        axios.get('/tags').then(response => this.tags = response.data.data);
+        this.preparePost();
     },
+
     methods: {
         addTag(newTag){
             let tag = {name: newTag};
@@ -90,8 +85,13 @@ export default  {
             this.post.tags.push(tag);
         },
         submitForm(){
+            let submittedPost = JSON.parse(JSON.stringify(this.post));
+            submittedPost.tags = this.post.tags.map(function(value) {
+                return value.id;
+            });
+            //console.log(tag_ids);
             var self = this;
-            axios.post('/post/store', this.post).then(function(response){
+            axios.post('/post/store', submittedPost).then(function(response){
                 if(response.status == 200){
                     self.notifyUser('success', {body:['Your post has been published']});
                 }
@@ -103,7 +103,25 @@ export default  {
             this.responseClass = className;
             this.responseText = responseText;
         },
-    }
+        preparePost(){
+            if(this.$route.params.id){
+                const id = this.$route.params.id;
+                this.$store.dispatch('getPost', id).then((response) => {
+                    this.post = response.data;
+                }).catch(function(error){
+                    console.log(error);
+                });
+                this.edit = true;
+            } else {
+                this.post = {
+                    title: '',
+                    description: '',
+                    body: '',
+                    tags: [],
+                };
+            }
+        },
+    },
 }
 </script>
 

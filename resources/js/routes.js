@@ -9,22 +9,26 @@ let routes = [
         component: require('./views/Home.vue').default,
     },
     {
-        path: '/about',
-        component: require('./views/About.vue').default,
-    },
-    {
-        path: '/contact',
-        component: require('./views/Contact.vue').default,
-    },
-    {
         path: '/newpost',
         component: require('./views/NewPost.vue').default,
-        meta: { requiresAuth: true },
+        //meta: { requiresAuth: true },
     },
     {
         name: 'post',
         path: '/view/:id',
         component: require('./views/ViewPost.vue').default,
+    },
+    {
+        name: 'edit',
+        path: '/edit/:id',
+        component: require('./views/EditPost.vue').default,
+        //meta: { requiresAuth: true },
+    },
+    {
+        name: 'userPosts',
+        path: '/yourposts',
+        component: require('./views/UserPosts.vue').default,
+        //meta: { requiresAuth: true },
     },
     {
         name: 'login',
@@ -36,7 +40,6 @@ let routes = [
         path: '/register',
         component: require('./views/Register.vue').default,
     },
-
 ];
 
 const router = new VueRouter({
@@ -44,18 +47,18 @@ const router = new VueRouter({
     
 });
 
-router.beforeEach((to, from, next) => {
-    if(to.meta.requiresAuth){
-        if(!store.state.user){
-            next({
-                name: "login"
-            });
-        } else {
-            next();
-        }
-    } else {
-        next();
-    }
-});
+// router.beforeEach((to, from, next) => {
+//     if(to.meta.requiresAuth){
+//         if(!store.state.user){
+//             next({
+//                 name: "login"
+//             });
+//         } else {
+//             next();
+//         }
+//     } else {
+//         next();
+//     }
+// });
 
 export default router;

@@ -1,7 +1,5 @@
 <template>
-    <button :class="tagClass" :key="tag.id" :id="tag.id" @click="toggleSelect()">
-        {{ tag.name }}
-    </button>
+    <span class="tag">{{tag.name}}</span>
 </template>
 
 <script>
@@ -10,18 +8,10 @@ export default {
         tag: Object,
     },
     methods: {
-        // removeChosenTag(tag){ 
-        //     tag.selected = false;
-        // }
-        toggleSelect(){
-            this.tag.selected ? this.tag.selected = false : this.tag.selected = true;
-            this.$emit('toggle-selected-tag', this.tag);
-        }
+
     },
     computed: {
-        tagClass(){
-            return this.tag.selected ? 'tag selected' : 'tag';
-        }
+
     },
 };
 </script>

@@ -28,7 +28,7 @@ const store = new Vuex.Store({
                 });
             });
         },
-        getUser: ({commit, dispatch}) => {
+        async getUser ({commit, dispatch}) {
             return new Promise((resolve, reject) => {
                 axios.get('/getuser').then(function(response){
                     //console.log(response);
@@ -42,10 +42,32 @@ const store = new Vuex.Store({
                 });
             });
         },
+        async fetchPostsByUser ({commit, dispatch}) {
+            await dispatch('getUser');
+            return new Promise((resolve, reject) => {
+                axios.get('/user/posts/' + this.state.user.id).then(function(response){
+                    resolve(response);
+                }).catch(function(error){
+                    reject(error);
+                });
+            });
+        },
+        getPost: ({commit, dispatch}, postId) => {
+            return new Promise((resolve, reject) => {
+                axios.get('/get/' + postId).then(function(response){
+                    resolve(response.data);
+                }).catch(function(error){
+                    reject(error);
+                })
+            })
+        }
     },
     getters: {
         isAuthenticated: (state) => {
             return !!state.user;
+        },
+        userId: (state) => {
+            return state.user.id;
         },
     },
 })

@@ -18,8 +18,8 @@ class PostController extends Controller
         return new PostResource(Post::find($id));
     }
 
-    public function getPostsByUser(User $user){
-        return Post::where('user_id', $user->id)->get();
+    public function getPostsByUser($id){
+        return PostResource::collection(Post::where('user_id', $id)->get());
     }
 
     public function getPostsByTag(Tag $tag){
@@ -30,6 +30,7 @@ class PostController extends Controller
         $validatedPost = new Post($request->validated());
         $validatedPost->user_id = Auth::user()->id;
         $validatedPost->save();
+        $validatedPost->tags()->attach($request->tags);
     }
 
 }

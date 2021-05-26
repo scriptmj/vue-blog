@@ -25,11 +25,13 @@ Route::get('/tags/{post}', 'App\Http\Controllers\TagController@getTagsByPost');
 
 Route::post('/post/store', 'App\Http\Controllers\PostController@store');
 
-Route::get('/view/{id}', 'App\Http\Controllers\PostController@getPost');
+Route::get('/get/{id}', 'App\Http\Controllers\PostController@getPost');
 
 Route::get('/comments/{id}', 'App\Http\Controllers\CommentController@getCommentsByPost');
 
 Route::POST('/newcomment', 'App\Http\Controllers\CommentController@storeComment');
+
+Route::get('/user/posts/{id}', 'App\Http\Controllers\PostController@getPostsByUser');
 
 
 require __DIR__.'/auth.php';

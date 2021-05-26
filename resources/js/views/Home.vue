@@ -36,10 +36,6 @@ export default {
     data() {
         return {
             postData: {},
-            posts: [],
-            links: null,
-            meta: null,
-            baseUrl: 'blogposts?page=',
         }
     },
     methods: {
@@ -47,9 +43,6 @@ export default {
             var self = this;
             axios.get('/blogposts?page=' + page).then(function(response){
                 self.postData = response.data;
-                // self.posts = response.data.data;
-                // self.links = response.data.links;
-                // self.meta = response.data.meta;
             });
         }
     }

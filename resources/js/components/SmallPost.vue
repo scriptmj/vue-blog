@@ -8,6 +8,7 @@
                 </router-link>
             </p>
             <p class="post-body">{{ post.description }}</p>
+            <tag v-for="tag in post.tags" :tag="tag" :key="tag.id"></tag>
             <div class="post-footer">
                 <router-link :to="postLink">
                     Read more
@@ -20,9 +21,10 @@
 
 
 <script>
+import Tag from './Tag.vue';
 
 export default {
-    
+    components: { Tag },
     name: 'SmallPost',
     props: {
         post: Object,

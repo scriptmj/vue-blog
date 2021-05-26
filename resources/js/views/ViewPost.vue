@@ -21,6 +21,8 @@
 import Post from '../components/Post.vue';
 import ResponseView from '../components/ResponseView.vue';
 import CommentSection from '../components/CommentSection.vue';
+import store from '../store';
+
 export default {
     created(){
         this.fetchPost();
@@ -41,7 +43,7 @@ export default {
             this.error = this.post = null;
             var id = this.$route.params.id;
             var self = this;
-            axios.get('/view/' + id).then(function(response){
+            axios.get('/get/' + id).then(function(response){
                 self.post = response.data.data;
                 self.loading = false;
             }).catch(function(response){

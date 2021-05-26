@@ -75,7 +75,6 @@ export default  {
                 description: '',
                 body: '',
                 tags: [],
-                user_id: 1,
             },
             responseText: {},
             responseClass: 'hidden',

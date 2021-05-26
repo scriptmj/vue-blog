@@ -14,13 +14,13 @@
                 <router-link to="/newpost" class="nav-a">New post</router-link>
             </li>
             <div class="float-right">
-                <li class="nav-item">
+                <li class="nav-item" v-if=!auth>
                     <router-link to="/login" class="nav-a">Login</router-link>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" v-if=!auth>
                     <router-link to="/register" class="nav-a">Register</router-link>
                 </li>
-                <logout></logout>  
+                <logout v-if=auth></logout>  
             </div>
             
         </ul>
@@ -30,12 +30,19 @@
 
 <script>
 import Logout from './Logout.vue';
+import store from '../store';
+
 export default {
     components: {Logout},
     data() {
         return {
-           user: this.$store.state.user,
+           //username: this.$store.state.user.name,
+           //auth: this.$store.getters.isAuthenticated,
         }
+    },
+    computed: {
+        username(){ return this.$store.state.user.name},
+        auth(){ return this.$store.getters.isAuthenticated},
     },
 }
 </script>

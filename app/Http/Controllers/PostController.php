@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Http\Resources\PostResource;
 use App\Http\Requests\StorePostRequest;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -27,6 +28,7 @@ class PostController extends Controller
 
     public function store(StorePostRequest $request){
         $validatedPost = new Post($request->validated());
+        $validatedPost->user_id = Auth::user();
         $validatedPost->save();
     }
 

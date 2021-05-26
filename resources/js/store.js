@@ -1,3 +1,4 @@
+import axios from 'axios';
 import Vue from 'vue';
 import Vuex from 'vuex';
 
@@ -13,7 +14,6 @@ const store = new Vuex.Store({
         },
         logoutUser(state){
             state.user = null;
-            router.push('/');
         },
     },
     actions: {
@@ -25,6 +25,20 @@ const store = new Vuex.Store({
                     resolve(response);
                 }).catch(function(error){
                     reject(error.response.data.errors);
+                });
+            });
+        },
+        getUser: ({commit, dispatch}) => {
+            return new Promise((resolve, reject) => {
+                axios.get('/getuser').then(function(response){
+                    //console.log(response);
+                    if(response.data != ""){
+                        const user = response.data;
+                        commit('setUser', user);
+                    }
+                    resolve(response);
+                }).catch(function(error){
+                    reject(error);
                 });
             });
         },

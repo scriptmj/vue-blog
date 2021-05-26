@@ -35,6 +35,10 @@ class AuthenticatedSessionController extends Controller
         return Auth::user();
     }
 
+    public function getUser(){
+        return Auth::user();
+    }
+
     /**
      * Destroy an authenticated session.
      *

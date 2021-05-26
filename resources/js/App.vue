@@ -10,15 +10,28 @@
 <script>
 import Navigation from './components/Navigation.vue';
 import FooterComp from './components/FooterComp.vue';
+import store from "./store";
 
 export default {
     computed: {},
     components: { Navigation, FooterComp},
+    mounted() {
+        this.getUser();
+    },
     data() {
           return {
             
         }
-    }
+    },
+    methods: {
+        getUser(){
+            this.$store.dispatch('getUser').then((response)=> {
+                //
+            }).catch((error)=>{
+                //
+            });
+        },
+    },
 }
 </script>
 

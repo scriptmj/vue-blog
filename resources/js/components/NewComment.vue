@@ -33,7 +33,6 @@ export default {
         return {
             comment: {
                 'body': "",
-                'user_id': 1, //TODO REMOVE
                 'post_id': this.id,
             },
             responseText: {},
@@ -49,8 +48,8 @@ export default {
                     self.notifyUser('success', {body: ['Your comment has been published']});
                     self.comment.body = "";
                 } 
-            }).catch(function(response){
-                self.notifyUser('error', response.response.data.errors);
+            }).catch(function(error){
+                self.notifyUser('error', error.response.data.errors);
             });
         },
         notifyUser(className, responseText){

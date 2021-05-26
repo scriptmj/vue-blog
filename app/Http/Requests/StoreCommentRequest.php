@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class StoreCommentRequest extends FormRequest
 {
@@ -13,8 +14,7 @@ class StoreCommentRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
-        //TODO
+        return Auth::user();
     }
 
     /**
@@ -25,7 +25,6 @@ class StoreCommentRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_id' => 'required|exists:users,id|numeric',
             'post_id' => 'required|exists:posts,id|numeric',
             'body' => 'required|string',
         ];
@@ -34,7 +33,6 @@ class StoreCommentRequest extends FormRequest
     public function messages() {
         return [
             'body.required' => 'You didn\'t write anything',
-            'user_id.exists' => 'This user doesn\'t exist',
             'post_id.exists' => 'This post doesn\'t exist',
         ];
     }

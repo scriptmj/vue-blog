@@ -12,13 +12,10 @@ export default {
         logout() {
             var self = this;
             axios.post('/logout').then(function(response){
-                if(response.status == 200){
-                    self.$store.commit('logoutUser');
-                    //self.notifyUser('success', {body:['You have successfully logged in.']});
-                    //redirect
-                }
+                self.$store.commit('logoutUser');
+                self.$router.push('/');
             }).catch(function(response){
-                //self.notifyUser('error', response.response.data.errors);
+                self.$router.push('/');
             });
         },
     },

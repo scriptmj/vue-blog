@@ -4,7 +4,7 @@
 
         <response-view v-if="error" :response="error" :class="'response error'"></response-view>
 
-        <new-comment :id="postid"></new-comment>
+        <new-comment v-if=auth :id="postid"></new-comment>
 
         <hr />
 
@@ -20,11 +20,18 @@
 <script>
 import Comment from '../components/Comment.vue';
 import NewComment from './NewComment.vue';
+import store from '../store';
+
 export default {
     components: { Comment, NewComment },
     props: {
         comments: Array,
         postid: Number,
+    },
+    computed: {
+        auth() {
+            return this.$store.getters.isAuthenticated;
+        }
     },
     created(){
     },

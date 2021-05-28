@@ -8,7 +8,7 @@
                 </router-link>
             </p>
             <p class="post-body">{{ post.description }}</p>
-            <tag v-for="tag in post.tags" :tag="tag" :key="tag.id"></tag>
+            <tag v-for="(tag, index) in post.tags" :tag="tag" :key="index"></tag>
             <div class="post-footer">
                 <router-link :to="postLink">
                     Read more

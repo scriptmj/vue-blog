@@ -29,14 +29,6 @@ class Post extends Model
         return $this->belongsToMany('App\Models\Tag', 'tags_posts');
     }
 
-    public function getTags(){
-        $tags = DB::table('tags_posts')->where('post_id', $this->id)->get();
-        foreach($tags as $tag){
-            $tag->name = Tag::find($tag->tag_id)->name;
-        }
-        return TagResource::collection($tags);
-    }
-
     public function comments(){
         return $this->hasMany('App\Models\Comment');
     }

@@ -91,13 +91,22 @@ export default  {
             });
             //console.log(tag_ids);
             var self = this;
-            axios.post('/post/store', submittedPost).then(function(response){
-                if(response.status == 200){
-                    self.notifyUser('success', {body:['Your post has been published']});
-                }
-            }).catch(function(response){
-                self.notifyUser('error', response.response.data.errors);
-            });
+            if(self.edit){
+                axios.post('/post/edit/' + self.$route.params.id, submittedPost).then(function(response){
+                    self.notifyUser('success', {body:["Your post has been updated"]});
+                }).catch(function(response){
+                    self.notifyUser('error', response.response.data.errors);
+                });
+            } else {
+                axios.post('/post/store', submittedPost).then(function(response){
+                    if(response.status == 200){
+                        self.notifyUser('success', {body:['Your post has been published']});
+                    }
+                }).catch(function(response){
+                    self.notifyUser('error', response.response.data.errors);
+                });
+            }
+            
         },
         notifyUser(className, responseText){
             this.responseClass = className;
@@ -105,11 +114,8 @@ export default  {
         },
         preparePost(){
             if(this.$route.params.id){
-                const id = this.$route.params.id;
-                this.$store.dispatch('getPost', id).then((response) => {
+                this.$store.dispatch('getPost', this.$route.params.id).then((response) => {
                     this.post = response.data;
-                }).catch(function(error){
-                    console.log(error);
                 });
                 this.edit = true;
             } else {
@@ -119,6 +125,7 @@ export default  {
                     body: '',
                     tags: [],
                 };
+                this.edit = false;
             }
         },
     },

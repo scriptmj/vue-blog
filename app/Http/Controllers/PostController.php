@@ -33,4 +33,11 @@ class PostController extends Controller
         $validatedPost->tags()->attach($request->tags);
     }
 
+    public function update(StorePostRequest $request, $id){
+        $validatedPost = $request->validated();
+        $existingPost = Post::find($id);
+        $existingPost->update($validatedPost);
+        $existingPost->tags()->sync($request->tags);
+    }
+
 }

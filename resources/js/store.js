@@ -20,8 +20,8 @@ const store = new Vuex.Store({
         login: ({commit, dispatch}, user) => {
             return new Promise((resolve, reject) => {
                 axios.post('/login', user).then(function(response){
-                    const user = response.data;
-                    commit('setUser', user);
+
+                    commit('setUser', response.data);
                     resolve(response);
                 }).catch(function(error){
                     reject(error.response.data.errors);
@@ -33,8 +33,7 @@ const store = new Vuex.Store({
                 axios.get('/getuser').then(function(response){
                     //console.log(response);
                     if(response.data != ""){
-                        const user = response.data;
-                        commit('setUser', user);
+                        commit('setUser', response.data);
                     }
                     resolve(response);
                 }).catch(function(error){

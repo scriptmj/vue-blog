@@ -25,7 +25,7 @@ class PostResource extends JsonResource
             'user_id' => $this->user->id,
             'created_at' => $this->created_at->toDayDateTimeString(),
             'comments' => CommentResource::collection($this->comments),
-            'tags' => $this->getTags(),
+            'tags' => $this->tags,
         ];
     }
 }

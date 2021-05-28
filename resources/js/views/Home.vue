@@ -2,16 +2,16 @@
     <div>
         <pagination 
             :data="postData" 
-            @pagination-change-page="getResults"
+            @pagination-change-page="getPosts"
             :show-disabled="true"></pagination>
 
-        <template v-for="post in postData.data">
-            <small-post :post="post" :key="post.id"></small-post>
+        <template v-for="(post, index) in postData.data">
+            <small-post :post="post" :key="index"></small-post>
         </template>
 
         <pagination 
             :data="postData" 
-            @pagination-change-page="getResults"
+            @pagination-change-page="getPosts"
             :show-disabled="true"></pagination>
     </div>
 </template>
@@ -25,13 +25,7 @@ import SmallPost from '../components/SmallPost';
 export default {
     components: { SmallPost },
     created() {
-        this.getResults();
-        // var self = this;
-        // axios.get('/blogposts').then(function(response){
-        //     self.posts = response.data.data;
-        //     self.links = response.data.links;
-        //     self.meta = response.data.meta;
-        // });
+        this.getPosts();
     },
     data() {
         return {
@@ -39,7 +33,7 @@ export default {
         }
     },
     methods: {
-        getResults(page = 1){
+        getPosts(page = 1){
             var self = this;
             axios.get('/blogposts?page=' + page).then(function(response){
                 self.postData = response.data;

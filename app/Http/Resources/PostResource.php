@@ -26,6 +26,7 @@ class PostResource extends JsonResource
             'created_at' => $this->created_at->toDayDateTimeString(),
             'comments' => CommentResource::collection($this->comments),
             'tags' => $this->tags,
+            'image' => $this->image,
         ];
     }
 }

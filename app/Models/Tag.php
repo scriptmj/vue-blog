@@ -14,6 +14,10 @@ class Tag extends Model
     ];
 
     public function posts(){
-        return $this->belongsToMany('App\Models\Post');
+        return $this->belongsToMany('App\Models\Post', 'tags_posts');
+    }
+
+    public function getPostsByTag(){
+        //return PostResource::collection(Post::orderBy('created_at', 'DESC')->paginate(10));
     }
 }

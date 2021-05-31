@@ -35,6 +35,13 @@
                 placeholder="Write your post" />
         </div>
         <div class="form-group">
+            <label for="image">Image</label>
+            <input type="file" accept="image/*" @change="uploadImage" id="image" name="image" />
+            <div id="image-preview">
+                <img v-if="imageUrl" :src="imageUrl" />
+            </div>
+        </div>
+        <div class="form-group">
             <label for="tags">Categories</label>
             <multiselect 
                 v-model="post.tags" 
@@ -43,9 +50,7 @@
                 track-by="id"
                 :multiple="true"
                 :searchable="true"
-                :taggable="true"
                 :close-on-select="false"
-                @tag="addTag"
                 tag-placeholder="Add new category"
                 placeholder="Select categories">
             </multiselect>
@@ -58,12 +63,11 @@
 </template>
 
 <script>
-import Tag from "./Tag.vue";
 import Multiselect from 'vue-multiselect';
 import ResponseView from './ResponseView.vue';
 
 export default  {
-  components: { Tag, Multiselect, ResponseView },
+  components: {Multiselect, ResponseView },
     data() {
         return {
             tags: [],
@@ -71,34 +75,37 @@ export default  {
             responseText: {},
             responseClass: 'hidden',
             edit: false,
+            image: null,
+            imageUrl: null,
         }
     },
     mounted() {
-        axios.get('/tags').then(response => this.tags = response.data.data);
         this.preparePost();
     },
 
     methods: {
-        addTag(newTag){
-            let tag = {name: newTag};
-            this.tags.push(tag);
-            this.post.tags.push(tag);
-        },
         submitForm(){
-            let submittedPost = JSON.parse(JSON.stringify(this.post));
-            submittedPost.tags = this.post.tags.map(function(value) {
+            let formData = new FormData();
+            //let submittedPost = JSON.parse(JSON.stringify(this.post));
+            let tags = this.post.tags.map(function(value) {
                 return value.id;
             });
-            //console.log(tag_ids);
+            if(this.image){
+                formData.append('image', this.image, this.image.name);
+            }
+            formData.append('title', this.post.title);
+            formData.append('description', this.post.description);
+            formData.append('body', this.post.body);
+            formData.append('tags[]', JSON.stringify(tags));
             var self = this;
             if(self.edit){
-                axios.post('/post/edit/' + self.$route.params.id, submittedPost).then(function(response){
+                axios.post('/post/edit/' + self.$route.params.id, formData).then(function(response){
                     self.notifyUser('success', {body:["Your post has been updated"]});
                 }).catch(function(response){
                     self.notifyUser('error', response.response.data.errors);
                 });
             } else {
-                axios.post('/post/store', submittedPost).then(function(response){
+                axios.post('/post/store', formData).then(function(response){
                     if(response.status == 200){
                         self.notifyUser('success', {body:['Your post has been published']});
                     }
@@ -113,9 +120,11 @@ export default  {
             this.responseText = responseText;
         },
         preparePost(){
+            this.$store.dispatch('getTags').then(response => this.tags = response);
             if(this.$route.params.id){
                 this.$store.dispatch('getPost', this.$route.params.id).then((response) => {
                     this.post = response.data;
+                    this.imageUrl = response.data.image;
                 });
                 this.edit = true;
             } else {
@@ -128,6 +137,11 @@ export default  {
                 this.edit = false;
             }
         },
+        uploadImage(e){
+            const file = e.target.files[0];
+            this.image = file;
+            this.imageUrl = URL.createObjectURL(file);
+        }
     },
 }
 </script>

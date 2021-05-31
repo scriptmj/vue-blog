@@ -9,7 +9,7 @@
         <hr />
 
         <template v-for="comment in comments">
-            <comment :comment="comment" :key="comment.id"></comment>
+            <comment :comment="comment" :key="comment.id" class="ml-5"></comment>
         </template>
 
     </div>
@@ -48,5 +48,4 @@ export default {
 
 
 <style>
-
 </style>

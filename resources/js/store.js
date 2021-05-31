@@ -59,7 +59,34 @@ const store = new Vuex.Store({
                     reject(error);
                 })
             })
-        }
+        },
+        getAllPosts: ({commit, dispatch}, page) => {
+            return new Promise((resolve, reject) => {
+                axios.get('/blogposts?page=' + page).then(function(response){
+                    resolve(response.data);
+                }).catch(function(error){
+                    console.log(error);
+                });
+            });
+        },
+        fetchPostsByTag: ({commit, dispatch}, tagId) => {
+            return new Promise((resolve) => {
+                axios.get('/blogposts/tag/' + tagId).then(function(response){
+                    resolve(response.data);
+                }).catch(function(error){
+                    console.log(error);
+                })
+            })
+        },
+        getTags: () => {
+            return new Promise((resolve) =>{
+                axios.get('/tags').then(function(response) {
+                    resolve(response.data.data);
+                }).catch(function(error){
+                    console.log(error);
+                });
+            });
+        },
     },
     getters: {
         isAuthenticated: (state) => {

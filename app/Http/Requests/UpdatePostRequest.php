@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class StorePostRequest extends FormRequest
+class UpdatePostRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -30,7 +30,7 @@ class StorePostRequest extends FormRequest
             'body' => 'required|string|min:3',
             'premium' => 'boolean',
             'tags' => 'required|array',
-            'image' => 'required|file|image',
+            'image' => 'file|image',
         ];
     }
 
@@ -43,7 +43,6 @@ class StorePostRequest extends FormRequest
             'body.required' => 'A body is required',
             'body.min' => 'Your body is too short',
             'tags.required' => 'You need at least one category',
-            'image.required' => 'An image is required',
             'image.file' => 'The imagine is not a valid file',
             'image.image' => 'The uploaded file is not an image',
         ];

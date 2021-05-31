@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\Tag;
 use App\Http\Resources\PostResource;
 use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\UpdatePostRequest;
 use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
@@ -22,22 +24,26 @@ class PostController extends Controller
         return PostResource::collection(Post::where('user_id', $id)->get());
     }
 
-    public function getPostsByTag(Tag $tag){
-        return $tag->posts;
+    public function getPostsByTag($tag_id){
+        return PostResource::collection(Tag::find($tag_id)->posts()->paginate(10));
     }
 
     public function store(StorePostRequest $request){
         $validatedPost = new Post($request->validated());
         $validatedPost->user_id = Auth::user()->id;
+        $validatedPost->image = $request->image->store('imagefiles');
         $validatedPost->save();
-        $validatedPost->tags()->attach($request->tags);
+        $validatedPost->tags()->attach(json_decode($request->tags[0]));
     }
 
-    public function update(StorePostRequest $request, $id){
+    public function update(UpdatePostRequest $request, $id){
         $validatedPost = $request->validated();
         $existingPost = Post::find($id);
+        if($request->image !== null){
+            $existingPost->image = $request->image->store('imagefiles');
+        }
         $existingPost->update($validatedPost);
-        $existingPost->tags()->sync($request->tags);
+        $existingPost->tags()->sync(json_decode($request->tags[0]));
     }
 
 }

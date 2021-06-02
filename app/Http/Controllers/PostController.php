@@ -13,7 +13,11 @@ use Illuminate\Support\Facades\Auth;
 class PostController extends Controller
 {
     public function getAllPosts(){
-        return PostResource::collection(Post::orderBy('created_at', 'DESC')->paginate(10));
+        if(Auth::user() && Auth::user()->isPremiumActive()){
+            return PostResource::collection(Post::orderBy('created_at', 'DESC')->paginate(10));
+        } else {
+            return PostResource::collection(Post::where('premium', false)->orderBy('created_at', 'DESC')->paginate(10));
+        }
     }
 
     public function getPost($id){

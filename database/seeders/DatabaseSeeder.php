@@ -38,5 +38,8 @@ class DatabaseSeeder extends Seeder
         for($i = 1 ; $i < 6 ; $i++){
             DB::table('users')->where('id', $i)->update(['premium_id' => $i]);
         }
+        for($i = 0 ; $i < 20 ; $i++){
+            DB::table('posts')->where('id', rand(1, Post::count()))->update(['premium' => true]);
+        }
     }
 }

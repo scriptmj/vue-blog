@@ -7,6 +7,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\UserResource;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -32,11 +33,16 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return Auth::user();
+        return new UserResource(Auth::user());
     }
 
     public function getUser(){
-        return Auth::user();
+        $user = Auth::user();
+        if($user){
+            return new UserResource(Auth::user());
+        } else {
+            return null;
+        }
     }
 
     /**

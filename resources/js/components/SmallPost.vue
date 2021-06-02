@@ -1,7 +1,10 @@
 <template>
     <div>
         <div class="post-card ml-5">
-            <p class="silent">{{post.created_at}}</p>
+            <div class="post-header">
+                <span class="silent">{{post.created_at}}</span>
+                <span v-if="post.premium" class="premium">Premium</span>
+            </div>
             <p>
                 <router-link :to="postLink" class="post-title">
                     {{ post.title }}
@@ -78,7 +81,7 @@ export default {
         display: flex;
         justify-content: space-between;
     }
-    p.silent {
+    span.silent {
         font-weight:400;
         font-size:0.75rem;
         letter-spacing: 0.01rem;
@@ -95,5 +98,15 @@ export default {
         display: inline;
         border-radius: 10rem;
         cursor: pointer;
+    }
+    .premium {
+        background: teal;
+        color: white;
+        padding: 5px 50px;
+        border-radius: 10rem;
+    }
+    .post-header{
+        display: flex;
+        justify-content: space-between;
     }
 </style>

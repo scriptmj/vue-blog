@@ -53,9 +53,8 @@ const store = new Vuex.Store({
         async getUser ({commit, dispatch}) {
             return new Promise((resolve, reject) => {
                 axios.get('/getuser').then(function(response){
-                    //console.log(response);
                     if(response.data != ""){
-                        commit('setUser', response.data);
+                        commit('setUser', response.data.data);
                     }
                     resolve(response);
                 }).catch(function(error){
@@ -193,6 +192,9 @@ const store = new Vuex.Store({
         },
         userId: (state) => {
             return state.user.id;
+        },
+        isPremium: (state) => {
+            return state.user.premium;
         },
     },
 })

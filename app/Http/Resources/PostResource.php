@@ -27,6 +27,7 @@ class PostResource extends JsonResource
             'comments' => CommentResource::collection($this->comments),
             'tags' => $this->tags,
             'image' => $this->image,
+            'premium' => $this->premium,
         ];
     }
 }

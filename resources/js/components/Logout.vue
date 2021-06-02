@@ -11,10 +11,7 @@ export default {
     methods: {
         logout() {
             var self = this;
-            axios.post('/logout').then(function(response){
-                self.$store.commit('logoutUser');
-                self.$router.push('/');
-            }).catch(function(response){
+            this.$store.dispatch('logout').then(function(response) {
                 self.$router.push('/');
             });
         },

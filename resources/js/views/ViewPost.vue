@@ -10,7 +10,7 @@
                 <hr>
                 <h2 class="ml-5">Comments</h2>
 
-                <comment-section :comments="post.comments" :postid="post.id"></comment-section>
+                <comment-section :postid="post.id"></comment-section>
             </div>
         </div>
     </div>    
@@ -43,11 +43,11 @@ export default {
             this.error = this.post = null;
             var id = this.$route.params.id;
             var self = this;
-            axios.get('/get/' + id).then(function(response){
+            this.$store.dispatch('getPost', id).then(function(response){
                 self.post = response.data.data;
                 self.loading = false;
             }).catch(function(response){
-                self.error = response;
+                self.error = {body: ['Something went wrong.']};
                 self.loading = false;
             });
         },

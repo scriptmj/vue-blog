@@ -85,6 +85,24 @@ export default  {
 
     methods: {
         submitForm(){
+            let formData = this.prepareFormData();
+            var self = this;
+            if(self.edit){
+                var post = { id: self.$route.params.id, post: formData};
+                this.$store.dispatch('editPost', post).then(function(response){
+                    self.notifyUser('success', {body:["Your post has been updated"]});
+                }).catch(function(response){
+                    self.notifyUser('error', response.response.data.errors);
+                });
+            } else {
+                this.$store.dispatch('storePost', formData).then(function(response){
+                    self.notifyUser('success', {body:['Your post has been published']});
+                }).catch(function(response){
+                    self.notifyUser('error', response.response.data.errors);
+                });
+            }
+        },
+        prepareFormData(){
             let formData = new FormData();
             //let submittedPost = JSON.parse(JSON.stringify(this.post));
             let tags = this.post.tags.map(function(value) {
@@ -97,23 +115,7 @@ export default  {
             formData.append('description', this.post.description);
             formData.append('body', this.post.body);
             formData.append('tags[]', JSON.stringify(tags));
-            var self = this;
-            if(self.edit){
-                axios.post('/post/edit/' + self.$route.params.id, formData).then(function(response){
-                    self.notifyUser('success', {body:["Your post has been updated"]});
-                }).catch(function(response){
-                    self.notifyUser('error', response.response.data.errors);
-                });
-            } else {
-                axios.post('/post/store', formData).then(function(response){
-                    if(response.status == 200){
-                        self.notifyUser('success', {body:['Your post has been published']});
-                    }
-                }).catch(function(response){
-                    self.notifyUser('error', response.response.data.errors);
-                });
-            }
-            
+            return formData;
         },
         notifyUser(className, responseText){
             this.responseClass = className;

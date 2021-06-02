@@ -43,11 +43,10 @@ export default {
     methods: {
         submitForm(){
             var self = this;
-            axios.post('/newcomment', this.comment).then(function(response){
-                if(response.status == 200){
-                    self.notifyUser('success', {body: ['Your comment has been published']});
-                    self.comment.body = "";
-                } 
+            this.$store.dispatch('storeComment', this.comment).then(function(response){
+                self.notifyUser('success', {body: ['Your comment has been published']});
+                self.comment.body = "";
+                self.$emit('reload');
             }).catch(function(error){
                 self.notifyUser('error', error.response.data.errors);
             });

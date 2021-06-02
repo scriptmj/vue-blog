@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use App\Models\Comment;
+use App\Models\Post;
 use App\Http\Requests\StoreCommentRequest;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\CommentResource;
 
 class CommentController extends Controller
 {
@@ -14,8 +16,8 @@ class CommentController extends Controller
         return Comment::all();
     }
 
-    public function getCommentByPost(Post $post){
-        return Comment::where('post_id', $post->id)->get();
+    public function getCommentsByPost($postId){
+        return CommentResource::collection(Post::findOrFail($postId)->comments->sortByDesc('created_at'));
     }
 
     public function storeComment(StoreCommentRequest $request){
@@ -23,4 +25,5 @@ class CommentController extends Controller
         $validatedComment->user_id = Auth::user()->id;
         $validatedComment->save();
     }
+    
 }

@@ -17,6 +17,9 @@ const store = new Vuex.Store({
         },
     },
     actions: {
+        /*
+        User interaction
+        */
         login: ({commit, dispatch}, user) => {
             return new Promise((resolve, reject) => {
                 axios.post('/login', user).then(function(response){
@@ -36,6 +39,16 @@ const store = new Vuex.Store({
                 });
             });
         },
+        logout: ({commit, dispatch}) => {
+            return new Promise((resolve) => {
+                axios.post('/logout').then(function(response){
+                    commit('logoutUser');
+                    self.$router.push('/');
+                }).catch(function(error){
+                    console.log(error);
+                });
+            })
+        },
 
         async getUser ({commit, dispatch}) {
             return new Promise((resolve, reject) => {
@@ -50,6 +63,10 @@ const store = new Vuex.Store({
                 });
             });
         },
+
+        /*
+        Posts
+        */
         async fetchPostsByUser ({commit, dispatch}) {
             await dispatch('getUser');
             return new Promise((resolve, reject) => {
@@ -87,12 +104,31 @@ const store = new Vuex.Store({
                 })
             })
         },
-        getTags: () => {
-            return new Promise((resolve) =>{
-                axios.get('/tags').then(function(response) {
-                    resolve(response.data.data);
+
+        getPost: ({commit, dispatch}, postId) => {
+            return new Promise((resolve, reject) => {
+                axios.get('/get/' + postId).then(function(response){
+                    resolve(response);
                 }).catch(function(error){
-                    console.log(error);
+                    reject(error);
+                })
+            })
+        },
+        storePost: ({commit, dispatch}, post) => {
+            return new Promise((resolve, reject) => {
+                axios.post('/post/store', post).then(function(response){
+                    resolve(response);
+                }).catch(function(error){
+                    reject(error);
+                });
+            });
+        },
+        editPost: ({commit, dispatch}, post) => {
+            return new Promise((resolve, reject) => {
+                axios.post('/post/edit/' + post.id, post.post).then(function(response){
+                    resolve(response);
+                }).catch(function(error){
+                    reject(error);
                 });
             });
         },
@@ -106,6 +142,19 @@ const store = new Vuex.Store({
             });
         },
 
+
+        /* 
+        Tags
+        */
+        getTags: () => {
+            return new Promise((resolve) =>{
+                axios.get('/tags').then(function(response) {
+                    resolve(response.data.data);
+                }).catch(function(error){
+                    console.log(error);
+                });
+            });
+        },
         storeTag: ({commit, dispatch}, tag) => {
             return new Promise((resolve, reject) => {
                 axios.post('/tags/new', tag).then(function(response) {
@@ -114,7 +163,29 @@ const store = new Vuex.Store({
                     reject(error);
                 });
             })
-        }
+        },
+
+        /*
+        Comments 
+        */
+       storeComment: ({commit, dispatch}, comment) => {
+           return new Promise((resolve, reject) => {
+                axios.post('/newcomment', comment).then(function(response){
+                    resolve(response);
+                }).catch(function(error){
+                    reject(error);
+                });
+           });
+       },
+       getComments: ({commit, dispatch}, postId) => {
+           return new Promise((resolve, reject) => {
+               axios.get('/comments/' + postId).then(function(response){
+                   resolve(response);
+               }).catch(function(error){
+                   console.log(error);
+               });
+           });
+       },
     },
     getters: {
         isAuthenticated: (state) => {

@@ -4,7 +4,7 @@
 
         <response-view v-if="error" :response="error" :class="'response error'"></response-view>
 
-        <new-comment v-if=auth :id="postid"></new-comment>
+        <new-comment v-if=auth :id="postid" v-on:reload="reloadComments"></new-comment>
 
         <hr />
 
@@ -25,8 +25,10 @@ import store from '../store';
 export default {
     components: { Comment, NewComment },
     props: {
-        comments: Array,
         postid: Number,
+    },
+    mounted(){
+        this.reloadComments();
     },
     computed: {
         auth() {
@@ -39,9 +41,16 @@ export default {
         return {
             loading: false,
             error: null,
+            comments: [],
         }
     },
     methods: {
+        reloadComments(){
+            var self = this;
+            this.$store.dispatch('getComments', this.postid).then(function(response){
+                self.comments = response.data.data;
+            });
+        },
     },
 }
 </script>

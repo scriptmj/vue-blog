@@ -1,5 +1,7 @@
 <template>
     <div>
+        <h2 class="ml-5">Login</h2>
+
         <response-view :response="responseText" :class="'response ' + responseClass"></response-view>
         <form @submit.prevent="submitLogin">
         <div class="form-group">
@@ -35,7 +37,7 @@ export default {
     data() {
         return {
             login: {
-                'name': '',
+                'email': '',
                 'password': '',
             },
             responseText: {},

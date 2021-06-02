@@ -17,7 +17,7 @@
                     <td>
                         <router-link :to="getEditLink(post.id)" class="actions-link">Edit</router-link>
                         /
-                        Delete</td>
+                        <span @click="deletePost(post.id)" class="clickable">Delete</span></td>
                 </tr>
             </tbody>
         </table>
@@ -49,6 +49,7 @@ export default {
                 console.log(error);
             });
         },
+
         getEditLink(id){
             return {
                 name: "edit",
@@ -56,6 +57,11 @@ export default {
                     id: id
                 }
             }
+        },
+        deletePost(id){
+            this.$store.dispatch('deletePost', id).then((response) => {
+                this.getUserPosts();
+            });
         },
     },
 
@@ -79,5 +85,9 @@ export default {
         text-decoration-line: underline;
         color: black;
         background:none;
+    }
+    .clickable:hover{
+        text-decoration-line: underline;
+        cursor: pointer;
     }
 </style>

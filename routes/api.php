@@ -25,6 +25,7 @@ Route::get('/tags/{post}', 'App\Http\Controllers\TagController@getTagsByPost');
 
 Route::post('/post/store', 'App\Http\Controllers\PostController@store');
 Route::post('/post/edit/{id}', 'App\Http\Controllers\PostController@update');
+Route::delete('/post/destroy/{id}', 'App\Http\Controllers\PostController@destroy');
 
 Route::get('/blogposts/tag/{id}', 'App\Http\Controllers\PostController@getPostsByTag');
 

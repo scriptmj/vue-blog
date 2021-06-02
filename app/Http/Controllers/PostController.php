@@ -46,4 +46,11 @@ class PostController extends Controller
         $existingPost->tags()->sync(json_decode($request->tags[0]));
     }
 
+    public function destroy($id){
+        $post = Post::findOrFail($id);
+        $post->tags()->detach();
+        $post->comments()->delete();
+        $post->delete();
+    }
+
 }

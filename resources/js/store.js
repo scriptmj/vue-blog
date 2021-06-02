@@ -20,7 +20,6 @@ const store = new Vuex.Store({
         login: ({commit, dispatch}, user) => {
             return new Promise((resolve, reject) => {
                 axios.post('/login', user).then(function(response){
-
                     commit('setUser', response.data);
                     resolve(response);
                 }).catch(function(error){
@@ -28,6 +27,16 @@ const store = new Vuex.Store({
                 });
             });
         },
+        register: ({commit, dispatch}, user) => {
+            return new Promise((resolve, reject) => {
+                axios.post('/register', user).then(function(response){
+                    resolve(response);
+                }).catch(function(error){
+                    reject(error.response.data.errors);
+                });
+            });
+        },
+
         async getUser ({commit, dispatch}) {
             return new Promise((resolve, reject) => {
                 axios.get('/getuser').then(function(response){
@@ -82,6 +91,15 @@ const store = new Vuex.Store({
             return new Promise((resolve) =>{
                 axios.get('/tags').then(function(response) {
                     resolve(response.data.data);
+                }).catch(function(error){
+                    console.log(error);
+                });
+            });
+        },
+        deletePost: ({commit, dispatch}, postId) => {
+            return new Promise((resolve) => {
+                axios.delete('/post/destroy/' + postId).then(function(response){
+                    resolve(response);
                 }).catch(function(error){
                     console.log(error);
                 });

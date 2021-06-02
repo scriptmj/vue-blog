@@ -8,6 +8,7 @@ use App\Models\Post;
 use App\Models\Comment;
 use App\Models\Tag;
 use App\Models\Category;
+use App\Models\PremiumAccount;
 use Illuminate\Support\Facades\DB;
 
 
@@ -32,6 +33,10 @@ class DatabaseSeeder extends Seeder
                 ['tag_id' => rand(1, $categoryCount), 
                 'post_id' => rand(1, $postCount)]
             );
+        }
+        PremiumAccount::factory(5)->create();
+        for($i = 1 ; $i < 6 ; $i++){
+            DB::table('users')->where('id', $i)->update(['premium_id' => $i]);
         }
     }
 }

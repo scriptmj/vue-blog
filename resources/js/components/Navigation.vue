@@ -13,6 +13,9 @@
             <li class="nav-item" v-if=auth>
                 <router-link to="/tags" class="nav-a">Manage tags</router-link>
             </li>
+            <li class="nav-item" v-if=auth>
+                <router-link to="/premium" class="nav-a">Premium</router-link>
+            </li>
             <div class="float-right">
                 <li class="nav-item" v-if=!auth>
                     <router-link to="/login" class="nav-a">Login</router-link>

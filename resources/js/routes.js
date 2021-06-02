@@ -45,6 +45,11 @@ let routes = [
         path: '/tags',
         component: require('./views/TagControl.vue').default,
     },
+    {
+        name: 'premium',
+        path: '/premium',
+        component: require('./views/Premium.vue').default,
+    },
 ];
 
 const router = new VueRouter({

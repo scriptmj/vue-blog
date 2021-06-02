@@ -185,6 +185,29 @@ const store = new Vuex.Store({
                });
            });
        },
+
+       /*
+       Premium 
+       */
+       storePremium: ({commit, dispatch}, creditcard)=> {
+           return new Promise((resolve, reject) => {
+               axios.post('/premium/new', creditcard).then(function(response){
+                   resolve(response);
+               }).catch(function(error){
+                   reject(error);
+               });
+           });
+       },
+       getUserPremium: ({commit, dispatch}) => {
+           return new Promise((resolve, reject) => {
+               axios.get('/premium').then(function(response){
+                   resolve(response);
+               }).catch(function(error){
+                   reject(error);
+               });
+           });
+       },
+
     },
     getters: {
         isAuthenticated: (state) => {

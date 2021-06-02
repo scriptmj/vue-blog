@@ -37,3 +37,6 @@ Route::get('/comments/{id}', 'App\Http\Controllers\CommentController@getComments
 Route::POST('/newcomment', 'App\Http\Controllers\CommentController@storeComment');
 
 Route::get('/user/posts/{id}', 'App\Http\Controllers\PostController@getPostsByUser');
+
+Route::post('/premium/new', 'App\Http\Controllers\UserController@storePremium');
+Route::get('/premium', 'App\Http\Controllers\UserController@getPremium');

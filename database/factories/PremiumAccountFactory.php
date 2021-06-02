@@ -27,7 +27,7 @@ class PremiumAccountFactory extends Factory
             'ccname' => $this->faker->name,
             'ccnumber' => $this->faker->creditCardNumber,
             'ccexpdate' => $this->faker->creditCardExpirationDateString,
-            'cccvv' => 737,
+            'cccvv' => '737',
         ];
     }
 }

@@ -20,7 +20,7 @@ class CreatePremiumAccounts extends Migration
             $table->string('ccname');
             $table->string('ccnumber');
             $table->string('ccexpdate');
-            $table->integer('cccvv');
+            $table->string('cccvv');
         });
 
         Schema::table('users', function (Blueprint $table){

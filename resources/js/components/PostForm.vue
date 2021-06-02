@@ -11,8 +11,8 @@
                 class=""
                 v-model="post.title"
                 placeholder="Post title" />
+        </div>        
         <div class="form-group">
-        </div>
             <label for="description">Description</label>
             <textarea 
                 id="description" 
@@ -22,8 +22,8 @@
                 rows="3"
                 v-model="post.description"
                 placeholder="What's this post about?" />
-        <div class="form-group">
         </div>
+        <div class="form-group">
             <label for="body">Body</label>
             <textarea 
                 id="body" 

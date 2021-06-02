@@ -22,6 +22,7 @@ Route::get('/blogposts', 'App\Http\Controllers\PostController@getAllPosts');
 
 Route::get('/tags', 'App\Http\Controllers\TagController@getAllTags');
 Route::get('/tags/{post}', 'App\Http\Controllers\TagController@getTagsByPost');
+Route::post('/tags/new', 'App\Http\Controllers\TagController@store');
 
 Route::post('/post/store', 'App\Http\Controllers\PostController@store');
 Route::post('/post/edit/{id}', 'App\Http\Controllers\PostController@update');

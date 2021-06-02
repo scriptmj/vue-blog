@@ -40,6 +40,11 @@ let routes = [
         path: '/register',
         component: require('./views/Register.vue').default,
     },
+    {
+        name: 'tags',
+        path: '/tags',
+        component: require('./views/TagControl.vue').default,
+    },
 ];
 
 const router = new VueRouter({

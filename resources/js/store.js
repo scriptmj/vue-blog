@@ -105,6 +105,16 @@ const store = new Vuex.Store({
                 });
             });
         },
+
+        storeTag: ({commit, dispatch}, tag) => {
+            return new Promise((resolve, reject) => {
+                axios.post('/tags/new', tag).then(function(response) {
+                    resolve(response);
+                }).catch(function(error){
+                    reject(error);
+                });
+            })
+        }
     },
     getters: {
         isAuthenticated: (state) => {

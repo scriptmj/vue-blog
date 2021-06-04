@@ -4,10 +4,20 @@
             <h2>Premium</h2>
             <response-view :response="responseText" :class="'response ' + responseClass"></response-view>
 
-            <div v-if="user.premium">You are subscribed
-                TODO
+<!-- If already subscribed -->
+            <div v-if="premiumLoaded">You are subscribed.
+                <p>Your credit card number: {{premiumCcnumber}}</p> 
+                <div v-if="user.premiumAccount.active">
+                    <p>Next payment on: {{premiumExpDate}}</p>
+                    <button class="button" @click="cancelPremium">Cancel premium subscription</button>
+                </div>
+                <div v-if="!user.premiumAccount.active">
+                    Your subscription will end on {{premiumExpDate}}
+                </div>
+                
             </div>
 
+<!-- If not already subscribed -->
             <div v-if="!user.premium">
                 <h4>Sign up for premium content.</h4>
                 <form @submit.prevent="submitPremium">
@@ -71,7 +81,13 @@ export default {
     },
     data(){
         return {
-            user: {},
+            premiumLoaded: false,
+            user: {
+                premiumAccount: {
+                    ccnumber: '',
+                    premium_expiration_date: '',
+                },
+            },
             creditcard: {ccexpdate: ''},
             responseClass: '',
             responseText: {},
@@ -115,10 +131,27 @@ export default {
         getUserPremium(){
             var self = this;
             this.$store.dispatch('getUserPremium').then(function(response){
-                console.log(response);
+                console.log(response.data.data);
                 self.user.premiumAccount = response.data.data;
+                self.premiumLoaded = true;
+                //self.user.premiumAccount.ccnumber = response.data.data.ccnumber;
             });
-        }
+        },
+        cancelPremium(){
+            this.premiumLoaded = false;
+            var self = this;
+            this.$store.dispatch('cancelPremium').then(function(response){
+                self.getUserPremium();
+            });
+        },
+    },
+    computed: {
+        premiumCcnumber() {
+            return this.user.premiumAccount.ccnumber;
+        },
+        premiumExpDate() {
+            return this.user.premiumAccount.premium_expiration_date;
+        },
     }
 }
 </script>

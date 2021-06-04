@@ -38,5 +38,6 @@ Route::POST('/newcomment', 'App\Http\Controllers\CommentController@storeComment'
 
 Route::get('/user/posts/{id}', 'App\Http\Controllers\PostController@getPostsByUser');
 
-Route::post('/premium/new', 'App\Http\Controllers\UserController@storePremium');
-Route::get('/premium', 'App\Http\Controllers\UserController@getPremium');
+Route::post('/premium/new', 'App\Http\Controllers\PremiumAccountController@storePremium');
+Route::get('/premium', 'App\Http\Controllers\PremiumAccountController@getPremium');
+Route::post('/premium/cancel', 'App\Http\Controllers\PremiumAccountController@cancelPremium');

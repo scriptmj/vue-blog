@@ -9,5 +9,5 @@ class PremiumAccount extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['premium_expiration_date', 'ccname', 'ccnumber', 'ccexpdate', 'cccvv'];
+    protected $fillable = ['premium_expiration_date', 'ccname', 'ccnumber', 'ccexpdate', 'cccvv', 'active'];
 }

@@ -21,6 +21,7 @@ class CreatePremiumAccounts extends Migration
             $table->string('ccnumber');
             $table->string('ccexpdate');
             $table->string('cccvv');
+            $table->boolean('active')->default(true);
         });
 
         Schema::table('users', function (Blueprint $table){

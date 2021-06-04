@@ -207,6 +207,15 @@ const store = new Vuex.Store({
                });
            });
        },
+       cancelPremium: ({commit, dispatch}) => {
+           return new Promise((resolve, reject) => {
+               axios.post('/premium/cancel').then(function(response){
+                   resolve(response);
+               }).catch(function(error){
+                   console.log(error);
+               });
+           });
+       },
 
     },
     getters: {

@@ -18,6 +18,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// CR :: door gebruik je maken van de standaard Laravel CRUD kun je dit kleiner maken door routing groups te gebruiken
+
 Route::get('/blogposts', 'App\Http\Controllers\PostController@getAllPosts');
 
 Route::get('/tags', 'App\Http\Controllers\TagController@getAllTags');

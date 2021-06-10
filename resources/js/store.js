@@ -1,6 +1,6 @@
-import axios from 'axios';
-import Vue from 'vue';
-import Vuex from 'vuex';
+import axios from "axios";
+import Vue from "vue";
+import Vuex from "vuex";
 
 Vue.use(Vuex);
 
@@ -9,10 +9,10 @@ const store = new Vuex.Store({
         user: null,
     },
     mutations: {
-        setUser(state, user){
+        setUser(state, user) {
             state.user = user;
         },
-        logoutUser(state){
+        logoutUser(state) {
             state.user = null;
         },
     },
@@ -20,203 +20,268 @@ const store = new Vuex.Store({
         /*
         User interaction
         */
-        login: ({commit, dispatch}, user) => {
+        // CR :: dispatch gebruik je niet dus mag je er uit laten
+        login: ({ commit, dispatch }, user) => {
+            // CR :: als je de router.push() hierin mee neemt hoef je dat niet te doen in de login.vue en kan dus de promise er om heen weg
             return new Promise((resolve, reject) => {
-                axios.post('/login', user).then(function(response){
-                    commit('setUser', response.data);
-                    resolve(response);
-                }).catch(function(error){
-                    reject(error.response.data.errors);
-                });
+                axios
+                    .post("/login", user)
+                    .then(function (response) {
+                        commit("setUser", response.data);
+                        resolve(response);
+                    })
+                    .catch(function (error) {
+                        reject(error.response.data.errors);
+                    });
             });
         },
-        register: ({commit, dispatch}, user) => {
+        register: ({ commit, dispatch }, user) => {
+            // CR :: ook hier is de promise overbodig, bespreken we morgen!
             return new Promise((resolve, reject) => {
-                axios.post('/register', user).then(function(response){
-                    resolve(response);
-                }).catch(function(error){
-                    reject(error.response.data.errors);
-                });
+                axios
+                    .post("/register", user)
+                    .then(function (response) {
+                        resolve(response);
+                    })
+                    .catch(function (error) {
+                        reject(error.response.data.errors);
+                    });
             });
         },
-        logout: ({commit, dispatch}) => {
+        logout: ({ commit, dispatch }) => {
             return new Promise((resolve) => {
-                axios.post('/logout').then(function(response){
-                    commit('logoutUser');
-                    self.$router.push('/');
-                }).catch(function(error){
-                    console.log(error);
-                });
-            })
+                axios
+                    .post("/logout")
+                    .then(function (response) {
+                        commit("logoutUser");
+                        self.$router.push("/");
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            });
         },
 
-        async getUser ({commit, dispatch}) {
+        async getUser({ commit, dispatch }) {
             return new Promise((resolve, reject) => {
-                axios.get('/getuser').then(function(response){
-                    if(response.data != ""){
-                        commit('setUser', response.data.data);
-                    }
-                    resolve(response);
-                }).catch(function(error){
-                    reject(error);
-                });
+                axios
+                    .get("/getuser")
+                    .then(function (response) {
+                        if (response.data != "") {
+                            commit("setUser", response.data.data);
+                        }
+                        resolve(response);
+                    })
+                    .catch(function (error) {
+                        reject(error);
+                    });
             });
         },
 
         /*
         Posts
         */
-        async fetchPostsByUser ({commit, dispatch}) {
-            await dispatch('getUser');
+        // CR :: state gebruiken om je data te bewaren! Dit kan je er dan weer uithalen met getters
+        async fetchPostsByUser({ commit, dispatch }) {
+            await dispatch("getUser");
             return new Promise((resolve, reject) => {
-                axios.get('/user/posts/' + this.state.user.id).then(function(response){
-                    resolve(response);
-                }).catch(function(error){
-                    reject(error);
-                });
+                axios
+                    .get("/user/posts/" + this.state.user.id)
+                    .then(function (response) {
+                        resolve(response);
+                    })
+                    .catch(function (error) {
+                        reject(error);
+                    });
             });
         },
-        getPost: ({commit, dispatch}, postId) => {
+        getPost: ({ commit, dispatch }, postId) => {
             return new Promise((resolve, reject) => {
-                axios.get('/get/' + postId).then(function(response){
-                    resolve(response.data);
-                }).catch(function(error){
-                    reject(error);
-                })
-            })
-        },
-        getAllPosts: ({commit, dispatch}, page) => {
-            return new Promise((resolve, reject) => {
-                axios.get('/blogposts?page=' + page).then(function(response){
-                    resolve(response.data);
-                }).catch(function(error){
-                    console.log(error);
-                });
+                axios
+                    .get("/get/" + postId)
+                    .then(function (response) {
+                        resolve(response.data);
+                    })
+                    .catch(function (error) {
+                        reject(error);
+                    });
             });
         },
-        fetchPostsByTag: ({commit, dispatch}, tagId) => {
+        getAllPosts: ({ commit, dispatch }, page) => {
+            return new Promise((resolve, reject) => {
+                axios
+                    .get("/blogposts?page=" + page)
+                    .then(function (response) {
+                        resolve(response.data);
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            });
+        },
+        fetchPostsByTag: ({ commit, dispatch }, tagId) => {
             return new Promise((resolve) => {
-                axios.get('/blogposts/tag/' + tagId).then(function(response){
-                    resolve(response.data);
-                }).catch(function(error){
-                    console.log(error);
-                })
-            })
-        },
-
-        getPost: ({commit, dispatch}, postId) => {
-            return new Promise((resolve, reject) => {
-                axios.get('/get/' + postId).then(function(response){
-                    resolve(response);
-                }).catch(function(error){
-                    reject(error);
-                })
-            })
-        },
-        storePost: ({commit, dispatch}, post) => {
-            return new Promise((resolve, reject) => {
-                axios.post('/post/store', post).then(function(response){
-                    resolve(response);
-                }).catch(function(error){
-                    reject(error);
-                });
-            });
-        },
-        editPost: ({commit, dispatch}, post) => {
-            return new Promise((resolve, reject) => {
-                axios.post('/post/edit/' + post.id, post.post).then(function(response){
-                    resolve(response);
-                }).catch(function(error){
-                    reject(error);
-                });
-            });
-        },
-        deletePost: ({commit, dispatch}, postId) => {
-            return new Promise((resolve) => {
-                axios.delete('/post/destroy/' + postId).then(function(response){
-                    resolve(response);
-                }).catch(function(error){
-                    console.log(error);
-                });
+                axios
+                    .get("/blogposts/tag/" + tagId)
+                    .then(function (response) {
+                        resolve(response.data);
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
             });
         },
 
+        getPost: ({ commit, dispatch }, postId) => {
+            return new Promise((resolve, reject) => {
+                axios
+                    .get("/get/" + postId)
+                    .then(function (response) {
+                        resolve(response);
+                    })
+                    .catch(function (error) {
+                        reject(error);
+                    });
+            });
+        },
+        storePost: ({ commit, dispatch }, post) => {
+            return new Promise((resolve, reject) => {
+                axios
+                    .post("/post/store", post)
+                    .then(function (response) {
+                        resolve(response);
+                    })
+                    .catch(function (error) {
+                        reject(error);
+                    });
+            });
+        },
+        editPost: ({ commit, dispatch }, post) => {
+            return new Promise((resolve, reject) => {
+                axios
+                    .post("/post/edit/" + post.id, post.post)
+                    .then(function (response) {
+                        resolve(response);
+                    })
+                    .catch(function (error) {
+                        reject(error);
+                    });
+            });
+        },
+        deletePost: ({ commit, dispatch }, postId) => {
+            return new Promise((resolve) => {
+                axios
+                    .delete("/post/destroy/" + postId)
+                    .then(function (response) {
+                        resolve(response);
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            });
+        },
 
         /* 
         Tags
         */
+        // CR :: state gebruiken om je data te bewaren! Dit kan je er dan weer uithalen met getters
+
         getTags: () => {
-            return new Promise((resolve) =>{
-                axios.get('/tags').then(function(response) {
-                    resolve(response.data.data);
-                }).catch(function(error){
-                    console.log(error);
-                });
+            return new Promise((resolve) => {
+                axios
+                    .get("/tags")
+                    .then(function (response) {
+                        resolve(response.data.data);
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
             });
         },
-        storeTag: ({commit, dispatch}, tag) => {
+        storeTag: ({ commit, dispatch }, tag) => {
             return new Promise((resolve, reject) => {
-                axios.post('/tags/new', tag).then(function(response) {
-                    resolve(response);
-                }).catch(function(error){
-                    reject(error);
-                });
-            })
+                axios
+                    .post("/tags/new", tag)
+                    .then(function (response) {
+                        resolve(response);
+                    })
+                    .catch(function (error) {
+                        reject(error);
+                    });
+            });
         },
 
         /*
         Comments 
         */
-       storeComment: ({commit, dispatch}, comment) => {
-           return new Promise((resolve, reject) => {
-                axios.post('/newcomment', comment).then(function(response){
-                    resolve(response);
-                }).catch(function(error){
-                    reject(error);
-                });
-           });
-       },
-       getComments: ({commit, dispatch}, postId) => {
-           return new Promise((resolve, reject) => {
-               axios.get('/comments/' + postId).then(function(response){
-                   resolve(response);
-               }).catch(function(error){
-                   console.log(error);
-               });
-           });
-       },
+        // CR :: state gebruiken om je data te bewaren! Dit kan je er dan weer uithalen met getters
 
-       /*
+        storeComment: ({ commit, dispatch }, comment) => {
+            return new Promise((resolve, reject) => {
+                axios
+                    .post("/newcomment", comment)
+                    .then(function (response) {
+                        resolve(response);
+                    })
+                    .catch(function (error) {
+                        reject(error);
+                    });
+            });
+        },
+        getComments: ({ commit, dispatch }, postId) => {
+            return new Promise((resolve, reject) => {
+                axios
+                    .get("/comments/" + postId)
+                    .then(function (response) {
+                        resolve(response);
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            });
+        },
+
+        /*
        Premium 
        */
-       storePremium: ({commit, dispatch}, creditcard)=> {
-           return new Promise((resolve, reject) => {
-               axios.post('/premium/new', creditcard).then(function(response){
-                   resolve(response);
-               }).catch(function(error){
-                   reject(error);
-               });
-           });
-       },
-       getUserPremium: ({commit, dispatch}) => {
-           return new Promise((resolve, reject) => {
-               axios.get('/premium').then(function(response){
-                   resolve(response);
-               }).catch(function(error){
-                   reject(error);
-               });
-           });
-       },
-       cancelPremium: ({commit, dispatch}) => {
-           return new Promise((resolve, reject) => {
-               axios.post('/premium/cancel').then(function(response){
-                   resolve(response);
-               }).catch(function(error){
-                   console.log(error);
-               });
-           });
-       },
+        // CR :: state gebruiken om je data te bewaren! Dit kan je er dan weer uithalen met getters
 
+        storePremium: ({ commit, dispatch }, creditcard) => {
+            return new Promise((resolve, reject) => {
+                axios
+                    .post("/premium/new", creditcard)
+                    .then(function (response) {
+                        resolve(response);
+                    })
+                    .catch(function (error) {
+                        reject(error);
+                    });
+            });
+        },
+        getUserPremium: ({ commit, dispatch }) => {
+            return new Promise((resolve, reject) => {
+                axios
+                    .get("/premium")
+                    .then(function (response) {
+                        resolve(response);
+                    })
+                    .catch(function (error) {
+                        reject(error);
+                    });
+            });
+        },
+        cancelPremium: ({ commit, dispatch }) => {
+            return new Promise((resolve, reject) => {
+                axios
+                    .post("/premium/cancel")
+                    .then(function (response) {
+                        resolve(response);
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            });
+        },
     },
     getters: {
         isAuthenticated: (state) => {
@@ -229,6 +294,6 @@ const store = new Vuex.Store({
             return state.user.premium;
         },
     },
-})
+});
 
 export default store;

@@ -9,6 +9,7 @@ use App\Http\Requests\StoreTagRequest;
 
 class TagController extends Controller
 {
+    // CR :: houd de CRUD van laravel zo veel mogelijk aan, dit maakt je routing makkelijker
     public function getAllTags(){
         return TagResource::collection(Tag::all());
     }
